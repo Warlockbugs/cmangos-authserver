@@ -15,10 +15,18 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-# disable warnings for dependencies
-DisableWarnings()
-add_subdirectory(recastnavigation)
-add_subdirectory(src)
-if (BUILD_EXTRACTORS)
-  add_subdirectory(libmpq)
-endif()
+set(LIBRARY_NAME utf8cpp)
+
+include_directories(
+  ${CMAKE_SOURCE_DIR}/dep/include/utf8cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+# header-only library
+add_library(${LIBRARY_NAME} INTERFACE)
+
+target_include_directories(${LIBRARY_NAME}
+  INTERFACE ${CMAKE_SOURCE_DIR}/dep/include/utf8cpp
+  INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
