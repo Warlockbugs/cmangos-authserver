@@ -20,7 +20,7 @@
 #define MANGOS_SYSTEMCONFIG_H
 
 #ifndef _PACKAGENAME
-#define _PACKAGENAME "CMaNGOS TBC"
+#define _PACKAGENAME "CMaNGOS AuthServer"
 #endif
 
 #include "revision.h"
@@ -36,11 +36,8 @@
 
 // Format is YYYYMMDDRR where RR is the change in the conf file
 // for that day.
-#ifndef _MANGOSDCONFVERSION
-# define _MANGOSDCONFVERSION 2020060701
-#endif
-#ifndef _REALMDCONFVERSION
-# define _REALMDCONFVERSION 2021031501
+#ifndef _AUTHSERVERCONFVERSION
+# define _AUTHSERVERCONFVERSION 2021031501
 #endif
 
 #if MANGOS_ENDIAN == MANGOS_BIGENDIAN
@@ -70,9 +67,7 @@
 # else
 #  define _ENDIAN_PLATFORM "Win32 (" _ENDIAN_STRING ")"
 # endif
-# define _MANGOSD_CONFIG  SYSCONFDIR"mangosd.conf"
-# define _REALMD_CONFIG   SYSCONFDIR"realmd.conf"
-# define _AUCTIONHOUSEBOT_CONFIG   SYSCONFDIR"ahbot.conf"
+# define _AUTHSERVER_CONFIG   SYSCONFDIR"cmangos-auth.conf"
 #else
 # if defined  (__FreeBSD__)
 #  define _ENDIAN_PLATFORM "FreeBSD_" ARCHITECTURE " (" _ENDIAN_STRING ")"
@@ -89,14 +84,12 @@
 # else
 #  define _ENDIAN_PLATFORM "Unix_" ARCHITECTURE " (" _ENDIAN_STRING ")"
 # endif
-# define _MANGOSD_CONFIG  SYSCONFDIR"mangosd.conf"
-# define _REALMD_CONFIG  SYSCONFDIR"realmd.conf"
-# define _AUCTIONHOUSEBOT_CONFIG   SYSCONFDIR"ahbot.conf"
+# define _AUTHSERVER_CONFIG   SYSCONFDIR"cmangos-auth.conf"
 #endif
 
 #define _FULLVERSION(REVD,REVH) _PACKAGENAME "/" _VERSION(REVD,REVH) " for " _ENDIAN_PLATFORM
 
 #define DEFAULT_PLAYER_LIMIT 100
 #define DEFAULT_WORLDSERVER_PORT 8085                       //8129
-#define DEFAULT_REALMSERVER_PORT 3724
+#define DEFAULT_AUTHSERVER_PORT 3724
 #endif

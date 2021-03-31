@@ -18,7 +18,7 @@ Development of this project dates back to 2004, and was developed under various 
 ## Authorship of the code
 Authorship is assigned for each commit within the git history, which is stored in these git repositories:
 * github.com/cmangos/mangos-svn (History from MaNGOS project from 2005-2008, originally hosted at http://mangos.svn.sourceforge.net)
-* github.com/cmangos/mangos-tbc (History since then)
+* github.com/cmangos/cmangos-authserver (History since then)
 Unfortunately, we have no detailed information of the history of the WoWD project;
 if somebody can provide information, please contact us, so that we can make this history available
 

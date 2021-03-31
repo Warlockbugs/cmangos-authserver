@@ -25,7 +25,7 @@ if(CCACHE_PROGRAM)
     set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CCACHE_PROGRAM}")
 endif()
 
-project(CMaNGOS_TBC)
+project(CMaNGOS_AuthServer)
 
 # Require C++ 14 support
 set(CMAKE_CXX_STANDARD 14)
@@ -33,8 +33,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Define here name of the binaries
-set(CMANGOS_BINARY_SERVER_NAME "mangosd")
-set(CMANGOS_BINARY_REALMD_NAME "realmd")
+set(CMANGOS_BINARY_AUTHSERVER_NAME "cmangos-auth")
 
 # Function to remove duplicate entries in provided string
 function(RemoveDuplicateSubstring stringIn stringOut)
@@ -214,7 +213,7 @@ endif()
 # Find needed packages and if necessery abort if something important is missing
 find_package(Boost REQUIRED COMPONENTS system program_options thread regex serialization)
 
-if(NOT Boost_FOUND AND (BUILD_GAME_SERVER OR BUILD_LOGIN_SERVER))
+if(NOT Boost_FOUND)
   message(STATUS "BOOST_ROOT = $ENV{BOOST_ROOT}")
   message(STATUS "BOOST_LIBRARYDIR = $ENV{BOOST_LIBRARYDIR}")
   if ("$ENV{BOOST_ROOT}" STREQUAL "")
@@ -231,7 +230,7 @@ if(NOT Boost_FOUND AND (BUILD_GAME_SERVER OR BUILD_LOGIN_SERVER))
 endif()
 
 # Win32 delivered packages
-if(WIN32 AND (BUILD_GAME_SERVER OR BUILD_LOGIN_SERVER OR BUILD_EXTRACTORS))
+if(WIN32)
   set(MYSQL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/dep/lib/include/mysql")
   set(MYSQL_LIBRARY "${CMAKE_SOURCE_DIR}/dep/lib/${DEP_ARCH}_release/libmySQL.lib")
   set(MYSQL_DEBUG_LIBRARY "${CMAKE_SOURCE_DIR}/dep/lib/${DEP_ARCH}_debug/libmySQL.lib")
@@ -247,7 +246,7 @@ if(WIN32 AND (BUILD_GAME_SERVER OR BUILD_LOGIN_SERVER OR BUILD_EXTRACTORS))
 endif()
 
 # *nix-specific packages
-if(UNIX AND (BUILD_GAME_SERVER OR BUILD_LOGIN_SERVER OR BUILD_EXTRACTORS))
+if(UNIX)
   if(POSTGRESQL)
     find_package(PostgreSQL REQUIRED)
   else()
@@ -284,22 +283,7 @@ if(UNIX AND (BUILD_GAME_SERVER OR BUILD_LOGIN_SERVER OR BUILD_EXTRACTORS))
   endif()
 endif()
 
-find_package(ZLIB QUIET)
-if(NOT ZLIB_FOUND)
-  # use internal source code
-  set(ZLIB_LIBRARIES "zlib")
-  message(STATUS "Could not find ZLIB on your system. The provided sources will be used.")
-endif()
-if(BUILD_EXTRACTORS)
-  find_package(BZip2 QUIET)
-  if(NOT (BZip2_FOUND OR BZIP2_FOUND))
-    # use provided source code
-    set(BZIP2_LIBRARIES "bzip2")
-    message(STATUS "Could not find BZIP2 on your system. The provided sources will be used.")
-  endif()
-endif()
-
-# Find core revision
+# Find server revision
 if(GIT_EXECUTABLE)
   execute_process(
     COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
@@ -341,16 +325,6 @@ set(DEFINITIONS_RELWITHDEBINFO NDEBUG _RELWITHDEBINFO MANGOS_RELWITHDEBINFO)
 set(DEFINITIONS_MINSIZEREL NDEBUG _MINSIZEREL MANGOS_MINSIZEREL)
 set(DEFINITIONS_DEBUG _DEBUG MANGOS_DEBUG)
 
-if(NOT BUILD_GAME_SERVER AND BUILD_SCRIPTDEV)
-  set(BUILD_SCRIPTDEV OFF)
-  message(STATUS "BUILD_SCRIPTDEV forced to OFF due to BUILD_GAME_SERVER is not set")
-endif()
-
-if(NOT BUILD_GAME_SERVER AND BUILD_PLAYERBOT)
-  set(BUILD_PLAYERBOT OFF)
-  message(STATUS "BUILD_PLAYERBOT forced to OFF due to BUILD_GAME_SERVER is not set")
-endif()
-
 if(PCH)
   if(${CMAKE_VERSION} VERSION_LESS "3.16") 
     message("PCH is not supported by your CMake version")
@@ -362,10 +336,6 @@ endif()
 
 # print out the results before continuing
 include(cmake/showoptions.cmake)
-
-if(NOT BUILD_GAME_SERVER AND NOT BUILD_LOGIN_SERVER AND NOT BUILD_EXTRACTORS AND NOT BUILD_DOCS AND NOT BUILD_RECASTDEMOMOD)
-  message(FATAL_ERROR "You must select something to build!")
-endif()
 
 if(XCODE)
   if(PLATFORM MATCHES X86)
@@ -401,36 +371,7 @@ else()
   set_directory_properties(PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS};${DEFINITIONS_RELEASE}")
 endif()
 
-if(BUILD_GAME_SERVER OR BUILD_LOGIN_SERVER OR BUILD_EXTRACTORS)
-  add_subdirectory(src)
-endif()
-
-if(BUILD_EXTRACTORS)
-  if(CMAKE_SYSTEM_PROCESSOR MATCHES "^arm")
-  set(BUILD_EXTRACTORS, OFF)
-  message(STATUS "BUILD_EXTRACTORS forced to OFF.  Not supported on ARM architecture")
-  else()
-    add_subdirectory(contrib/extractor)
-    add_subdirectory(contrib/vmap_extractor)
-    add_subdirectory(contrib/vmap_assembler)
-    add_subdirectory(contrib/mmap)
-  endif()
-endif()
-
-if(BUILD_DOCS)
-  add_subdirectory(doc)
-endif()
-
-if(BUILD_RECASTDEMOMOD)
-  if (WIN32)
-    if (NOT BUILD_EXTRACTORS)
-      add_subdirectory(contrib/mmap)
-    endif()
-    add_subdirectory(contrib/recastdemomod)
-  else()
-    message(STATUS "BUILD_RECASTDEMOMOD forced to OFF. Not supported on non windows system.")
-  endif()
-endif()
+add_subdirectory(src)
 
 if(BUILD_GIT_ID)
   add_subdirectory(contrib/git_id)
@@ -438,13 +379,7 @@ endif()
 
 # set default startup project
 if(MSVC)
-  if(BUILD_GAME_SERVER)
-    set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${CMANGOS_BINARY_SERVER_NAME})
-  elseif(BUILD_LOGIN_SERVER)
-    set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${CMANGOS_BINARY_REALMD_NAME})
-  elseif(BUILD_RECASTDEMOMOD)
-    set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT "RecastDemoMod")
-  endif()
+  set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${CMANGOS_BINARY_AUTHSERVER_NAME})
 endif()
 
 # if(SQL)

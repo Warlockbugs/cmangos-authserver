@@ -1,12 +1,12 @@
 ############################################
-# MaNGOS realmd configuration file         #
+# CMaNGOS AuthServer configuration file    #
 ############################################
 
-[RealmdConf]
+[AuthServerConf]
 ConfVersion=2021031501
 
 ###################################################################################################################
-# REALMD SETTINGS
+# AUTHSERVER SETTINGS
 #
 #    LoginDatabaseInfo
 #        Database connection settings for the realm server.
@@ -25,23 +25,23 @@ ConfVersion=2021031501
 #    MaxPingTime
 #         Settings for maximum database-ping interval (minutes between pings)
 #
-#    RealmServerPort
+#    AuthServerPort
 #         Port on which the server will listen
 #
 #    BindIP
 #         Bind Realm Server to specific IP address
-#         This option is useful for running multiple worldd/realmd instances
+#         This option is useful for running multiple world/authserver instances
 #         on different IP addresses using default ports.
 #         DO NOT CHANGE THIS UNLESS YOU _REALLY_ KNOW WHAT YOU'RE DOING
 #
 #    ListenerThreads
-#        Number of listener threads realmd should use.
+#        Number of listener threads authserver should use.
 #        Default: 1
 #
 #    PidFile
-#        Realmd daemon PID file
-#        Default: ""             - do not create PID file
-#                 "./realmd.pid" - create PID file (recommended name)
+#        AuthServer daemon PID file
+#        Default: ""                   - do not create PID file
+#                 "./cmangos-auth.pid" - create PID file (recommended name)
 #
 #    LogLevel
 #        Server console level of logging
@@ -55,7 +55,7 @@ ConfVersion=2021031501
 #
 #    LogFile
 #        Logfile name
-#        Default: "Realmd.log"
+#        Default: "AuthServer.log"
 #                 "" - empty name disable creating log file
 #
 #    LogTimestamp
@@ -116,16 +116,16 @@ ConfVersion=2021031501
 #
 ###################################################################################################################
 
-LoginDatabaseInfo = "127.0.0.1;3306;mangos;mangos;tbcrealmd"
+LoginDatabaseInfo = "127.0.0.1;3306;cmangos;cmangos;cmangos_authserver"
 LogsDir = ""
 MaxPingTime = 30
-RealmServerPort = 3724
+AuthServerPort = 3724
 BindIP = "0.0.0.0"
 ListenerThreads = 1
 PidFile = ""
 LogLevel = 0
 LogTime = 0
-LogFile = "Realmd.log"
+LogFile = "AuthServer.log"
 LogTimestamp = 0
 LogFileLevel = 0
 LogColors = ""

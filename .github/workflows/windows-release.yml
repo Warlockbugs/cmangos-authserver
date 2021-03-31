@@ -24,18 +24,6 @@ jobs:
           - OPTIONAL_DEFINES: ""
             TYPE: "default"
 
-          - OPTIONAL_DEFINES: "-DBUILD_EXTRACTORS=ON -DBUILD_PLAYERBOT=ON -DBUILD_AHBOT=ON -DBUILD_RECASTDEMOMOD=ON -DBUILD_GIT_ID=ON"
-            TYPE: "with-all"
-
-          - OPTIONAL_DEFINES: "-DBUILD_PLAYERBOT=ON -DBUILD_AHBOT=ON"
-            TYPE: "with-playerbot-ahbot"
-
-          - OPTIONAL_DEFINES: "-DBUILD_PLAYERBOT=ON"
-            TYPE: "with-playerbot"
-
-          - OPTIONAL_DEFINES: "-DBUILD_AHBOT=ON"
-            TYPE: "with-ahbot"
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -63,7 +51,7 @@ jobs:
         id: install-boost
         with:
           # REQUIRED: Specify the required boost version
-          # A list of supported versions can be found here: 
+          # A list of supported versions can be found here:
           # https://github.com/actions/boost-versions/blob/main/versions-manifest.json
           boost_version: ${{env.BOOST_VERSION}}
           # OPTIONAL: Specify a toolset on windows
@@ -100,26 +88,6 @@ jobs:
         with:
           name: snapshot-default
           path: all_snapshots
-      - name: Download artifact snapshot-with-all
-        uses: actions/download-artifact@v1
-        with:
-          name: snapshot-with-all
-          path: all_snapshots
-      - name: Download artifact snapshot-with-playerbot-ahbot
-        uses: actions/download-artifact@v1
-        with:
-          name: snapshot-with-playerbot-ahbot
-          path: all_snapshots
-      - name: Download artifact snapshot-with-playerbot
-        uses: actions/download-artifact@v1
-        with:
-          name: snapshot-with-playerbot
-          path: all_snapshots
-      - name: Download artifact snapshot-with-ahbot
-        uses: actions/download-artifact@v1
-        with:
-          name: snapshot-with-ahbot
-          path: all_snapshots
 
       - name: Get current date
         id: date
@@ -149,6 +117,3 @@ jobs:
           description: Scheduled release build failed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           avatarUrl: https://github.githubassets.com/images/modules/logos_page/Octocat.png
-
-
-

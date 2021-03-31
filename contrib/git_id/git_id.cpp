@@ -51,14 +51,14 @@
 // config
 
 #define NUM_REMOTES 4
-#define NUM_DATABASES 3
+#define NUM_DATABASES 1
 
 char remotes[NUM_REMOTES][MAX_REMOTE] =
 {
-    "git@github.com:cmangos/mangos-tbc.git",
-    "git://github.com/cmangos/mangos-tbc.git",      // used for fetch if present
-    "https://github.com/cmangos/mangos-tbc.git",
-    "https://github.com/cmangos/mangos-tbc/"
+    "git@github.com:cmangos/cmangos-authserver.git",
+    "git://github.com/cmangos/cmangos-authserver.git",      // used for fetch if present
+    "https://github.com/cmangos/cmangos-authserver.git",
+    "https://github.com/cmangos/cmangos-authserver/"
 };
 
 char remote_branch[MAX_REMOTE] = "master";
@@ -68,55 +68,41 @@ char new_index_file[MAX_PATH] = ".git/git_id_index";
 
 char databases[NUM_DATABASES][MAX_DB] =
 {
-    "realmd",
-    "characters",
-    "mangos",
+    "authserver",
 };
 
 char db_version_table[NUM_DATABASES][MAX_DB] =
 {
-    "realmd_db_version",
-    "character_db_version",
-    "db_version",
+    "authserver_db_version",
 };
 
 char db_sql_file[NUM_DATABASES][MAX_PATH] =
 {
-    "sql/base/realmd.sql",
-    "sql/base/characters.sql",
-    "sql/base/mangos.sql",
+    "sql/base/cmangos_authserver.sql",
 };
 
 char db_sql_rev_field[NUM_DATABASES][MAX_PATH] =
 {
-    "REVISION_DB_REALMD",
-    "REVISION_DB_CHARACTERS",
-    "REVISION_DB_MANGOS",
+    "REVISION_DB_AUTHSERVER",
 };
 
 // last milestone's file information
 char last_sql_update[NUM_DATABASES][MAX_PATH] =
 {
-    "s2325_01_realmd",
-    "s2325_02_characters",
-    "s2326_01_mangos_mangos_string",
+    "a0000_01_authserver",
 };
 
 int last_sql_rev[NUM_DATABASES] =
 {
-    2325,
-    2325,
-    2326
+    0000,
 };
 
 int last_sql_nr[NUM_DATABASES] =
 {
     1,
-    2,
-    1
 };
 
-#define REV_PREFIX "s"
+#define REV_PREFIX "a"
 #define REV_SCAN   REV_PREFIX "%d"
 #define REV_PRINT  REV_PREFIX "%04d"
 #define REV_FORMAT "[" REV_PRINT "]"

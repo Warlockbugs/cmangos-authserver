@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/// \addtogroup realmd Realm Daemon
+/// \addtogroup authserver Realm Daemon
 /// @{
 /// \file
 
@@ -46,9 +46,9 @@
 
 #ifdef _WIN32
 #include "ServiceWin32.h"
-char serviceName[] = "realmd";
-char serviceLongName[] = "MaNGOS realmd service";
-char serviceDescription[] = "Massive Network Game Object Server";
+char serviceName[] = "cmangos-auth";
+char serviceLongName[] = "CMaNGOS AuthServer service";
+char serviceDescription[] = "Continued Massive Network Game Object Server";
 /*
  * -1 - not in service mode
  *  0 - stopped
@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
 
     boost::program_options::options_description desc("Allowed options");
     desc.add_options()
-    ("config,c", boost::program_options::value<std::string>(&configFile)->default_value(_REALMD_CONFIG), "configuration file")
+    ("config,c", boost::program_options::value<std::string>(&configFile)->default_value(_AUTHSERVER_CONFIG), "configuration file")
     ("version,v", "print version and exit")
 #ifdef _WIN32
     ("s", boost::program_options::value<std::string>(&serviceParameter), "<run, install, uninstall> service");
@@ -142,8 +142,8 @@ int main(int argc, char* argv[])
 
     sLog.Initialize();
 
-    sLog.outString("[%s Auth server v%s] port(%d)", _PACKAGENAME, VERSION
-        , sConfig.GetIntDefault("RealmServerPort", -1));
+    sLog.outString("[%s v%s] port(%d)", _PACKAGENAME, VERSION
+        , sConfig.GetIntDefault("AuthServerPort", -1));
     sLog.outString("\n\n"
         "       _____     __  __       _   _  _____  ____   _____ \n"
         "      / ____|   |  \\/  |     | \\ | |/ ____|/ __ \\ / ____|\n"
@@ -160,10 +160,10 @@ int main(int argc, char* argv[])
 
     ///- Check the version of the configuration file
     uint32 confVersion = sConfig.GetIntDefault("ConfVersion", 0);
-    if (confVersion < _REALMDCONFVERSION)
+    if (confVersion < _AUTHSERVERCONFVERSION)
     {
         sLog.outError("*****************************************************************************");
-        sLog.outError(" WARNING: Your realmd.conf version indicates your conf file is out of date!");
+        sLog.outError(" WARNING: Your cmangos-auth.conf version indicates your conf file is out of date!");
         sLog.outError("          Please check for updates, as your current default values may cause");
         sLog.outError("          strange behavior.");
         sLog.outError("*****************************************************************************");
@@ -180,7 +180,7 @@ int main(int argc, char* argv[])
     sLog.outString();
     sLog.outString("<Ctrl-C> to stop.");
 
-    /// realmd PID file creation
+    /// authserver PID file creation
     std::string pidfile = sConfig.GetStringDefault("PidFile");
     if (!pidfile.empty())
     {
@@ -221,7 +221,7 @@ int main(int argc, char* argv[])
     // FIXME - more intelligent selection of thread count is needed here.  config option?
     MaNGOS::Listener<AuthSocket> listener(
             sConfig.GetStringDefault("BindIP", "0.0.0.0"),
-            sConfig.GetIntDefault("RealmServerPort", DEFAULT_REALMSERVER_PORT),
+            sConfig.GetIntDefault("AuthServerPort", DEFAULT_AUTHSERVER_PORT),
             sConfig.GetIntDefault("ListenerThreads", 1)
     );
 
@@ -245,7 +245,7 @@ int main(int argc, char* argv[])
 
                 if (!curAff)
                 {
-                    sLog.outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for realmd. Accessible processors bitmask (hex): %x", Aff, appAff);
+                    sLog.outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for authserver. Accessible processors bitmask (hex): %x", Aff, appAff);
                 }
                 else
                 {
@@ -263,9 +263,9 @@ int main(int argc, char* argv[])
         if (Prio)
         {
             if (SetPriorityClass(hProcess, HIGH_PRIORITY_CLASS))
-                sLog.outString("realmd process priority class set to HIGH");
+                sLog.outString("authserver process priority class set to HIGH");
             else
-                sLog.outError("Can't set realmd process priority class.");
+                sLog.outError("Can't set authserver process priority class.");
             sLog.outString();
         }
     }
@@ -346,7 +346,7 @@ bool StartDB()
         return false;
     }
 
-    if (!LoginDatabase.CheckRequiredField("realmd_db_version", REVISION_DB_REALMD))
+    if (!LoginDatabase.CheckRequiredField("authserver_db_version", REVISION_DB_AUTHSERVER))
     {
         ///- Wait for already started DB delay threads to end
         LoginDatabase.HaltDelayThread();

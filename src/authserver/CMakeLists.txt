@@ -16,7 +16,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-set(EXECUTABLE_NAME ${CMANGOS_BINARY_REALMD_NAME})
+set(EXECUTABLE_NAME ${CMANGOS_BINARY_AUTHSERVER_NAME})
 
 set(EXECUTABLE_SRCS
     AuthCodes.h
@@ -29,7 +29,7 @@ set(EXECUTABLE_SRCS
 
 if(WIN32)
   # add resource file to windows build
-  set(EXECUTABLE_SRCS ${EXECUTABLE_SRCS} realmd.rc)
+  set(EXECUTABLE_SRCS ${EXECUTABLE_SRCS} authserver.rc)
 endif()
 
 add_executable(${EXECUTABLE_NAME}
@@ -58,7 +58,7 @@ if(WIN32)
 
   # Add conf file to dev folder
   add_custom_command(TARGET ${EXECUTABLE_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different \"${CMAKE_CURRENT_SOURCE_DIR}/realmd.conf.dist.in\" \"$<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/realmd.conf.dist\")
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different \"${CMAKE_CURRENT_SOURCE_DIR}/cmangos-auth.conf.dist.in\" \"$<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/cmangos-auth.conf.dist\")
 endif()
 
 set(EXECUTABLE_LINK_FLAGS "")
@@ -76,7 +76,7 @@ set_target_properties(${EXECUTABLE_NAME} PROPERTIES LINK_FLAGS
 )
 
 install(TARGETS ${EXECUTABLE_NAME} DESTINATION ${BIN_DIR})
-install(FILES realmd.conf.dist.in DESTINATION ${CONF_DIR} RENAME realmd.conf.dist)
+install(FILES cmangos-auth.conf.dist.in DESTINATION ${CONF_DIR} RENAME cmangos-auth.conf.dist)
 
 if(MSVC)
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/\${BUILD_TYPE}/${EXECUTABLE_NAME}.pdb DESTINATION ${BIN_DIR} CONFIGURATIONS Debug)

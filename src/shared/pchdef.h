@@ -29,7 +29,6 @@
 #include "Log.h"
 #include "ByteBuffer.h"
 #include "ProgressBar.h"
-#include "WorldPacket.h"
 #include "Config/Config.h"
 #include "Database/DatabaseEnv.h"
 #include "Database/SQLStorage.h"

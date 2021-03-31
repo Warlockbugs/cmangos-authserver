@@ -108,7 +108,6 @@ set(SRC_GRP_UTIL
     Timer.h
     Util.cpp
     Util.h
-    WorldPacket.h
     ProducerConsumerQueue.h
     CommonDefines.h
 )

@@ -17,7 +17,7 @@
  */
 
 /** \file
-    \ingroup realmd
+    \ingroup authserver
 */
 
 #ifndef _AUTHCODES_H

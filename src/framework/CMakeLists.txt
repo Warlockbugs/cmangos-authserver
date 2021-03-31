@@ -18,22 +18,6 @@
 
 set(LIBRARY_NAME framework)
 
-set(SRC_GRP_DYNAMIC
-    Dynamic/FactoryHolder.h
-    Dynamic/ObjectRegistry.h
-)
-
-set(SRC_GRP_GAMESYSTEM
-    GameSystem/Grid.h
-    GameSystem/GridLoader.h
-    GameSystem/GridReference.h
-    GameSystem/GridRefManager.h
-    GameSystem/NGrid.h
-    GameSystem/TypeContainer.h
-    GameSystem/TypeContainerFunctions.h
-    GameSystem/TypeContainerVisitor.h
-)
-
 set(SRC_GRP_PLATFORM
     Platform/CompilerDefs.h
     Platform/Define.h
@@ -62,22 +46,10 @@ set(SRC_GRP_LINKED_REFERENCE
 )
 
 set(LIBRARY_SRCS
-    ${SRC_GRP_DYNAMIC}
-    ${SRC_GRP_GAMESYSTEM}
     ${SRC_GRP_PLATFORM}
     ${SRC_GRP_POLICIES}
     ${SRC_GRP_UTIL}
     ${SRC_GRP_LINKED_REFERENCE}
-)
-
-source_group("Dynamic"
-  FILES
-    ${SRC_GRP_DYNAMIC}
-)
-
-source_group("GameSystem"
-  FILES
-    ${SRC_GRP_GAMESYSTEM}
 )
 
 source_group("Platform"

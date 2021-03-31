@@ -1,6 +1,6 @@
 -- MySQL dump 10.13
 --
--- Host: localhost    Database: realmd
+-- Host: localhost    Database: cmangos_authserver
 -- ------------------------------------------------------
 -- Server version	5.5.32
 
@@ -16,23 +16,23 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `realmd_db_version`
+-- Table structure for table `authserver_db_version`
 --
 
-DROP TABLE IF EXISTS `realmd_db_version`;
-CREATE TABLE `realmd_db_version` (
-  `required_s2421_01_realmd_account_locale_agnostic` bit(1) DEFAULT NULL
+DROP TABLE IF EXISTS `authserver_db_version`;
+CREATE TABLE `authserver_db_version` (
+  `required_a0001_01_authserver` bit(1) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Last applied sql update to DB';
 
 --
--- Dumping data for table `realmd_db_version`
+-- Dumping data for table `authserver_db_version`
 --
 
-LOCK TABLES `realmd_db_version` WRITE;
-/*!40000 ALTER TABLE `realmd_db_version` DISABLE KEYS */;
-INSERT INTO `realmd_db_version` VALUES
+LOCK TABLES `authserver_db_version` WRITE;
+/*!40000 ALTER TABLE `authserver_db_version` DISABLE KEYS */;
+INSERT INTO `authserver_db_version` VALUES
 (NULL);
-/*!40000 ALTER TABLE `realmd_db_version` ENABLE KEYS */;
+/*!40000 ALTER TABLE `authserver_db_version` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -184,7 +184,7 @@ CREATE TABLE `realmlist` (
 LOCK TABLES `realmlist` WRITE;
 /*!40000 ALTER TABLE `realmlist` DISABLE KEYS */;
 INSERT INTO `realmlist` VALUES
-(1,'MaNGOS','127.0.0.1',8085,1,0,1,0,0,'');
+(1,'CMaNGOS','127.0.0.1',8085,1,0,1,0,0,'');
 /*!40000 ALTER TABLE `realmlist` ENABLE KEYS */;
 UNLOCK TABLES;
 

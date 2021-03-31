@@ -54,7 +54,7 @@ To be able to accomplish these goals, we support and promote:
   * [CMaNGOS Discord](https://discord.gg/Dgzerzb)
   * [GitHub repositories](https://github.com/cmangos/)
   * [Issue tracker](https://github.com/cmangos/issues/issues)
-  * [Pull Requests](https://github.com/cmangos/mangos-tbc/pulls)
+  * [Pull Requests](https://github.com/cmangos/cmangos-authserver/pulls)
   * [Wiki](https://github.com/cmangos/issues/wiki) with additional information on installation
   * [Contributing Guidelines](CONTRIBUTING.md)
   * Documentation can be found in the doc/ subdirectory and on the GitHub wiki

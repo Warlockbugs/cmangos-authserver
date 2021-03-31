@@ -17,7 +17,7 @@
  */
 
 /** \file
-    \ingroup realmd
+    \ingroup authserver
 */
 
 #include "Common.h"
@@ -32,10 +32,10 @@ INSTANTIATE_SINGLETON_1(RealmList);
 extern DatabaseType LoginDatabase;
 
 // will only support 1.12.1/1.12.2/1.12.3, TBC 2.4.3 and official release for WotLK and later, client builds 10505, 8606, 6141, 6005, 5875
-// if you need more from old build then add it in cases in realmd sources code
-// list sorted from high to low build and first build used as low bound for accepted by default range (any > it will accepted by realmd at least)
+// if you need more from old build then add it in cases in authserver sources code
+// list sorted from high to low build and first build used as low bound for accepted by default range (any > it will accepted by authserver at least)
 
-static const RealmBuildInfo ExpectedRealmdClientBuilds[] =
+static const RealmBuildInfo ExpectedAuthServerClientBuilds[] =
 {
     {13930, 3, 3, 5, 'a', {{}}, {{}}},                      // 3.3.5a China Mainland build
     {12340, 3, 3, 5, 'a',
@@ -63,13 +63,13 @@ static const RealmBuildInfo ExpectedRealmdClientBuilds[] =
 RealmBuildInfo const* FindBuildInfo(uint16 _build)
 {
     // first build is low bound of always accepted range
-    if (_build >= ExpectedRealmdClientBuilds[0].build)
-        return &ExpectedRealmdClientBuilds[0];
+    if (_build >= ExpectedAuthServerClientBuilds[0].build)
+        return &ExpectedAuthServerClientBuilds[0];
 
     // continue from 1 with explicit equal check
-    for (int i = 1; ExpectedRealmdClientBuilds[i].build; ++i)
-        if (_build == ExpectedRealmdClientBuilds[i].build)
-            return &ExpectedRealmdClientBuilds[i];
+    for (int i = 1; ExpectedAuthServerClientBuilds[i].build; ++i)
+        if (_build == ExpectedAuthServerClientBuilds[i].build)
+            return &ExpectedAuthServerClientBuilds[i];
 
     // none appropriate build
     return nullptr;

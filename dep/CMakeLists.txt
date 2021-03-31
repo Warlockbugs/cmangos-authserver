@@ -17,12 +17,4 @@
 
 # disable warnings for dependencies
 DisableWarnings()
-add_subdirectory(recastnavigation)
 add_subdirectory(src)
-if (BUILD_EXTRACTORS)
-  add_subdirectory(libmpq)
-endif()
-
-if (BUILD_GAME_SERVER OR BUILD_LOGIN_SERVER OR BUILD_EXTRACTORS)
-  add_subdirectory(g3dlite)
-endif()
